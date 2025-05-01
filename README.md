@@ -163,22 +163,6 @@ This project is intended for local development and testing purposes. No deployme
 
 ---
 
-## ▶️ Execution
-
-
-To run the project:
-
-    Locate the class with the main() method.
-
-    Right-click and run it, or use terminal:
-```bash
-    java Main
-	```
-
-💡 Make sure main() is correctly set as the entry point, especially when using build tools.
-
----
-
 ## 📦 Repository
 
 You can find the source code on GitHub:
@@ -191,4 +175,4 @@ You can find the source code on GitHub:
 These exercises will help you understand and practice working with Java Collections.
 Fork it, test it, and extend it as much as you want!
 
-Happy coding! 🚀"# S0104-Testing" 
+Happy coding! 🚀
