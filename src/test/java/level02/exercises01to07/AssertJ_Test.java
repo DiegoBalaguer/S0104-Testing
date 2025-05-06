@@ -3,12 +3,14 @@ package level02.exercises01to07;
 import level02.exercises01to07.data.DataTest;
 import level02.exercises01to07.model.*;
 
-import java.util.*;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * PROGRAM: AssertJ_Test
@@ -18,130 +20,116 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AssertJ_Test {
 
+    private DataTest dataTest;
+    private List<Object> objectList;
+    private Map<String, Integer> testMap;
+    private Object car, computer, fridge, ship, shoe;
+
+    @BeforeEach
+    void setUp() {
+        dataTest = new DataTest();
+        objectList = dataTest.getArrayListObjects();
+        testMap = dataTest.getMapObjects();
+        car = objectList.get(0);
+        computer = objectList.get(1);
+        fridge = objectList.get(2);
+        ship = objectList.get(3);
+        shoe = objectList.get(4);
+    }
+
     @Test
     void givenTwoEqualIntegers_whenCompared_thenTheyAreEqual() {
-        DataTest dataTest = new DataTest();
-        int numberActual = dataTest.getInteger();
-        int numberExpected = numberActual;
+        int actualNumber = dataTest.getInteger();
+        int expectedNumber = actualNumber;
 
-        assertThat(numberActual).isEqualTo(numberExpected);
+        assertThat(actualNumber).isEqualTo(expectedNumber);
     }
 
     @Test
     void givenTwoDifferentIntegers_whenCompared_thenTheyAreNotEqual() {
-        DataTest dataTest = new DataTest();
-        int numberActual = dataTest.getInteger();
-        int numberExpected = numberActual + 50;
+        int actualNumber = dataTest.getInteger();
+        int expectedNumber = actualNumber + 50;
 
-        assertThat(numberActual).isNotEqualTo(numberExpected);
+        assertThat(actualNumber).isNotEqualTo(expectedNumber);
     }
 
     @Test
     void givenTwoReferencesToSameObject_whenComparedByReference_thenTheyAreSame() {
-        DataTest dataTest = new DataTest();
-        Object objectActual = dataTest.getObject();
-        Object objectExpected = objectActual;
+        Object actualObject = dataTest.getObject();
+        Object expectedObject = actualObject;
 
-        assertThat(objectActual).isSameAs(objectExpected);
+        assertThat(actualObject).isSameAs(expectedObject);
     }
 
     @Test
     void givenTwoDifferentObjects_whenComparedByReference_thenTheyAreNotSame() {
-        DataTest dataTest = new DataTest();
-        Object objectActual = dataTest.getObject();
-        Object objectExpected = dataTest.getObject();
+        Object actualObject = dataTest.getObject();
+        Object expectedObject = dataTest.getObject();
 
-        assertThat(objectActual).isNotSameAs(objectExpected);
+        assertThat(actualObject).isNotSameAs(expectedObject);
     }
 
     @Test
     void givenTwoIdenticalIntArrays_whenCompared_thenTheyAreEqual() {
-        DataTest dataTest = new DataTest();
-        int[] arrayActual = dataTest.getIntArray();
-        int[] arrayActual02 = dataTest.getIntArray();
+        int[] actualArray = dataTest.getIntArray();
+        int[] actualArray02 = dataTest.getIntArray();
 
-        assertThat(arrayActual).isEqualTo(arrayActual02);
+        assertThat(actualArray).isEqualTo(actualArray02);
     }
 
-    @Test
-    void givenObjectsAddedToList_whenCheckedOrder_thenContainsExactlyInOrder() {
-        DataTest dataTest = new DataTest();
-        ArrayList<Object> arrayTest = dataTest.getArrayListObjects();
+    @Nested
+    class ListTests {
 
-        Object car = arrayTest.get(0);
-        Object computer = arrayTest.get(1);
-        Object fridge = arrayTest.get(2);
-        Object ship = arrayTest.get(3);
-        Object shoe = arrayTest.get(4);
+        @Test
+        void givenObjectsAddedToList_whenCheckedOrder_thenContainsExactlyInOrder() {
+            assertThat(objectList).containsExactly(car, computer, fridge, ship, shoe);
+        }
 
-        assertThat(arrayTest).containsExactly(car, computer, fridge, ship, shoe);
+        @Test
+        void givenObjectsAddedToList_whenCheckedForContents_thenContainsExactlyInAnyOrder() {
+            assertThat(objectList).containsExactlyInAnyOrder(shoe, ship, fridge, computer, car);
+        }
+
+        @Test
+        void givenObjectAddedOnceToList_whenChecked_thenContainsOnlyOnce() {
+            assertThat(objectList).containsOnlyOnce(fridge);
+        }
+
+        @Test
+        void givenObjectNotAddedToList_whenChecked_thenListDoesNotContainIt() {
+            Object camera = new Camera("Sony", "A300");
+            assertThat(objectList).doesNotContain(camera);
+        }
     }
 
-    @Test
-    void givenObjectsAddedToList_whenCheckedForContents_thenContainsExactlyInAnyOrder() {
-        DataTest dataTest = new DataTest();
-        ArrayList<Object> arrayTest = dataTest.getArrayListObjects();
+    @Nested
+    class MapTests {
 
-        Object car = arrayTest.get(0);
-        Object computer = arrayTest.get(1);
-        Object fridge = arrayTest.get(2);
-        Object ship = arrayTest.get(3);
-        Object shoe = arrayTest.get(4);
-
-        assertThat(arrayTest).containsExactlyInAnyOrder(shoe, ship, fridge, computer, car);
+        @Test
+        void givenKeyMap_whenVerificationMapKey_thenMapContainsKey() {
+            assertThat(testMap).containsKey("Proclamación de la Constitución Española");
+        }
     }
 
-    @Test
-    void givenObjectAddedOnceToList_whenChecked_thenContainsOnlyOnce() {
-        DataTest dataTest = new DataTest();
-        ArrayList<Object> arrayTest = dataTest.getArrayListObjects();
+    @Nested
+    class ExceptionTests {
 
-        Object car = arrayTest.get(0);
-        Object computer = arrayTest.get(1);
-        Object fridge = arrayTest.get(2);
-        Object ship = arrayTest.get(3);
-        Object shoe = arrayTest.get(4);
-
-        assertThat(arrayTest).containsOnlyOnce(fridge);
+        @DisplayName("Should throw exception when accessing invalid index")
+        @Test
+        void givenInvalidListIndex_whenAccessed_thenThrowsIndexOutOfBoundsException() {
+            assertThatThrownBy(() -> dataTest.getObjectById(10))
+                    .isInstanceOf(IndexOutOfBoundsException.class)
+                    .hasMessageContaining("Index 10 out of bounds for length 5");
+        }
     }
 
-    @Test
-    void givenObjectNotAddedToList_whenChecked_thenListDoesNotContainIt() {
-        DataTest dataTest = new DataTest();
-        ArrayList<Object> arrayTest = dataTest.getArrayListObjects();
+    @Nested
+    class OptionalTests {
 
-        Object car = arrayTest.get(0);
-        Object computer = arrayTest.get(1);
-        Object fridge = arrayTest.get(2);
-        Object ship = arrayTest.get(3);
-        Object shoe = arrayTest.get(4);
-        Object camera = new Camera("Sony", "A300");
-
-        assertThat(arrayTest).doesNotContain(camera);
-    }
-
-    @Test
-    void givenKeyMap_whenVerificationMapKey_thenMapContainsKey() {
-        DataTest dataTest = new DataTest();
-        Map<String, Integer> map = dataTest.getMapObjects();
-
-        assertThat(map).containsKey("Proclamación de la Constitución Española");
-    }
-
-    @Test
-    void givenInvalidListIndex_whenAccessed_thenThrowsIndexOutOfBoundsException() {
-        DataTest dataTest = new DataTest();
-
-        assertThatThrownBy(() -> dataTest.getObjectById(10))
-                .isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessageContaining("Index 10 out of bounds for length 5");
-    }
-
-    @Test
-    void givenEmptyOptional_whenChecked_thenIsEmpty() {
-        DataTest dataTest = new DataTest();
-        Optional<String> optionalEmpty = dataTest.getOptionalObjectEmpty();
-
-        assertThat(optionalEmpty).isEmpty();
+        @Test
+        void givenEmptyOptional_whenChecked_thenIsEmpty() {
+            Optional<String> optionalEmpty = dataTest.getOptionalObjectEmpty();
+            assertThat(optionalEmpty).isEmpty();
+        }
     }
 }

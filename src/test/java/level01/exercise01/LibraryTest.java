@@ -40,18 +40,18 @@ public class LibraryTest {
     void givenBookList_whenGettingTitleAtIndex_thenReturnsCorrectTitle() {
 
         assertDoesNotThrow(() -> {
-            String bookActual = "Alan Turing: el legado de un genio";
-            String bookExpected = library.getTitle(0);
+            String actualBook = "Alan Turing: el legado de un genio";
+            String expectedBook = library.getTitle(0);
 
-            assertEquals(bookActual, bookExpected);
+            assertEquals(actualBook, expectedBook);
         });
     }
 
     @Test
     void givenDuplicateBook_whenAdded_thenLibraryContainsOnlyOneInstance() {
-        Book bookActual = new Book("Alan Turing: el legado de un genio");
+        Book actualBook = new Book("Alan Turing: el legado de un genio");
 
-        library.addBook(bookActual);
+        library.addBook(actualBook);
 
         assertEquals(6, library.getBooks().size(), "We insert a book that we already have in the library and the number of books does not change.");
     }
@@ -60,17 +60,17 @@ public class LibraryTest {
     void givenBooks_whenGettingTitleByIndex_thenReturnsCorrectBook() {
 
         assertDoesNotThrow(() -> {
-            String bookActual = "El entorno de Unix";
-            String bookExpected = library.getTitle(3);
+            String actualBook = "El entorno de Unix";
+            String expectedBook = library.getTitle(3);
 
-            assertEquals(bookActual, bookExpected);
+            assertEquals(actualBook, expectedBook);
         });
     }
 
     @Test
     public void givenBookAdded_whenCheckingLibrarySize_thenSizeIsCorrect() {
-        Book bookActual = new Book("Viaje a la Luna");
-        library.addBook(bookActual);
+        Book actualBook = new Book("Viaje a la Luna");
+        library.addBook(actualBook);
 
         assertEquals(7, library.getBooks().size());
     }
@@ -79,8 +79,8 @@ public class LibraryTest {
     public void givenBookDeleted_whenCheckingLibrarySize_thenSizeDecreasedCorrectly() {
 
         assertDoesNotThrow(() -> {
-            String bookActual = library.getTitle(2);
-            library.removeBookByTitle(bookActual);
+            String actualBook = library.getTitle(2);
+            library.removeBookByTitle(actualBook);
         });
 
         assertEquals(5, library.getBooks().size());

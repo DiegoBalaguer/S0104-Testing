@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * DATE: 20/04/2025
  */
 
-public class DniExceptionTest {
+public class DniCalculatorExceptionTest {
 
     @Test
     void givenGetDniByIndex_whenIndexIsOutOfBounds_thenThrowsIndexOutOfBoundsException() {
-        DataTestDni listDniTest = new DataTestDni();
+        DataTestDni actualListDni = new DataTestDni();
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            listDniTest.getDniTestByIndex(10);
+            actualListDni.getDniTestByIndex(10);
         });
     }
 }

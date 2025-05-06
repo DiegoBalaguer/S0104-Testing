@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.of;
 
 /**
  * PROGRAM: CalculatorTest
@@ -33,10 +34,10 @@ public class CalculatorTest {
 
     static Stream<Arguments> additionProvider() {
         return Stream.of(
-                org.junit.jupiter.params.provider.Arguments.of(12, 8, 20),
-                org.junit.jupiter.params.provider.Arguments.of(20, 0, 20),
-                org.junit.jupiter.params.provider.Arguments.of(-10, 5, -5),
-                org.junit.jupiter.params.provider.Arguments.of(0, 0, 0)
+                of(12, 8, 20),
+                of(20, 0, 20),
+                of(-10, 5, -5),
+                of(0, 0, 0)
         );
     }
 
@@ -46,12 +47,12 @@ public class CalculatorTest {
         assertEquals(expected, Calculator.subtract(operator01, operator02));
     }
 
-    static Stream<org.junit.jupiter.params.provider.Arguments> subtractionProvider() {
+    static Stream<Arguments> subtractionProvider() {
         return Stream.of(
-                org.junit.jupiter.params.provider.Arguments.of(12, 8, 4),
-                org.junit.jupiter.params.provider.Arguments.of(20, 0, 20),
-                org.junit.jupiter.params.provider.Arguments.of(-10, 5, -15),
-                org.junit.jupiter.params.provider.Arguments.of(0, 0, 0)
+                of(12, 8, 4),
+                of(20, 0, 20),
+                of(-10, 5, -15),
+                of(0, 0, 0)
         );
     }
 
@@ -61,12 +62,12 @@ public class CalculatorTest {
         assertEquals(expected, Calculator.multiply(operator01, operator02));
     }
 
-    static Stream<org.junit.jupiter.params.provider.Arguments> multiplicationProvider() {
+    static Stream<Arguments> multiplicationProvider() {
         return Stream.of(
-                org.junit.jupiter.params.provider.Arguments.of(6, 6, 36),
-                org.junit.jupiter.params.provider.Arguments.of(3, 4, 12),
-                org.junit.jupiter.params.provider.Arguments.of(-4, 5, -20),
-                org.junit.jupiter.params.provider.Arguments.of(10, 0, 0)
+                of(6, 6, 36),
+                of(3, 4, 12),
+                of(-4, 5, -20),
+                of(10, 0, 0)
         );
     }
 
@@ -76,11 +77,11 @@ public class CalculatorTest {
         assertEquals(expected, Calculator.divide(operator01, operator02));
     }
 
-    static Stream<org.junit.jupiter.params.provider.Arguments> divisionProvider() {
+    static Stream<Arguments> divisionProvider() {
         return Stream.of(
-                org.junit.jupiter.params.provider.Arguments.of(12, 4, 3),
-                org.junit.jupiter.params.provider.Arguments.of(20, 5, 4),
-                org.junit.jupiter.params.provider.Arguments.of(-10, 5, -2)
+                of(12, 4, 3),
+                of(20, 5, 4),
+                of(-10, 5, -2)
         );
     }
 
@@ -92,10 +93,10 @@ public class CalculatorTest {
                 .hasMessageContaining("Divide by zero");
     }
 
-    static Stream<org.junit.jupiter.params.provider.Arguments> divisionByZeroProvider() {
+    static Stream<Arguments> divisionByZeroProvider() {
         return Stream.of(
-                org.junit.jupiter.params.provider.Arguments.of(5, 0),
-                org.junit.jupiter.params.provider.Arguments.of(-3, 0)
+                of(5, 0),
+                of(-3, 0)
         );
     }
 }
